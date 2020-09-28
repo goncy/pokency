@@ -57,6 +57,7 @@ const IndexRoute: React.FC<Props> = ({pokemon}) => {
         <h1>Quién es este Pokemon?</h1>
         <img
           alt="Pokemon"
+          data-test-id="image"
           height={512}
           src={pokemon.sprites.front_default}
           style={{
@@ -67,13 +68,19 @@ const IndexRoute: React.FC<Props> = ({pokemon}) => {
           width={512}
         />
         {status === "SUCCESS" ? (
-          <button autoFocus className="nes-btn is-primary" onClick={() => window.location.reload()}>
+          <button
+            autoFocus
+            className="nes-btn is-primary"
+            data-test-id="success"
+            onClick={() => window.location.reload()}
+          >
             Jugar nuevamente
           </button>
         ) : (
           <form onSubmit={handleSubmit}>
             <input
               className={`nes-input ${status === "FAIL" ? "is-error" : ""}`}
+              data-test-id="input"
               onChange={(event) => setName(event.target.value)}
             />
             <button className="nes-btn is-primary" type="submit">
@@ -88,7 +95,7 @@ const IndexRoute: React.FC<Props> = ({pokemon}) => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const pokemon = await fetch(
-    `https://pokeapi.co/api/v2/pokemon/${Math.round(Math.random() * (890 - 1) + 1)}`,
+    `https://pokeapi.co/api/v2/pokemon/${Math.round(Math.random() * (151 - 1) + 1)}`,
   ).then((res) => res.json());
 
   return {
